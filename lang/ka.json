@@ -1,0 +1,23 @@
+{
+    "Movies":"ფილმები",
+    "Movie":"ფილმი",
+    "Library":"ბიბლიოთეკა",
+    "Profile":"პროფილი",
+    "search_movies":"მოძებნე ფილმი...",
+    "Search":"ძებნა",
+    "watched_movies":"ნაყურები ფილმები",
+    "min":"წუთი",
+    "Settings":"პარამეტრები",
+    "movie_started":"ფილმი დაიწყო",
+    "started_watching":"თქვენ დაიწყეთ ყურება",
+    "movie_cancelled":"ფილმის გაწყვეტა",
+    "stopped_watching":"თქვენ შეწყვიტეთ ფილმის ყურება",
+    "rating":"IMDB რეიტინგი",
+    "Actors": "მასახიობები:",
+   "Awards":"ჯილდოები:",
+    "already_watched":"თქვენ უკვე ნაყურები გაქვთ ფილმი",
+    "start_watching":"ფილმის დაწყება",
+    "end_watching":"ფილმის შეწყვეტა",
+    "finish_watching":"ფილმის დასრულება",
+    "library_empty":"ბიბლიოთეკა ცარიელია"
+ }

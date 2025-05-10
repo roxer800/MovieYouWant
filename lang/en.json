@@ -1,0 +1,23 @@
+{
+   "Movies":"Movies",
+   "Movie":"Movie",
+   "Library":"Library",
+   "Profile":"Profile",
+   "search_movies":"Search movies...",
+   "Search":"Search",
+   "watched_movies":"MOVIES YOU WATCHED",
+   "min":"min",
+   "Settings":"Settings",
+   "movie_started":"Movie Started",
+   "started_watching":"You started watching",
+   "movie_cancelled":"Movie Canceled",
+   "stopped_watching":"You stopped watching the movie",
+   "rating":"IMDB Rating",
+   "Actors": "Actors:",
+   "Awards":"Awards:",
+   "already_watched":"You have already watched this movie",
+   "start_watching":"Start Watching",
+   "end_watching":"End Watching",
+   "finish_watching":"Finish Movie",
+   "library_empty":"You Dont Have Movies in Library"
+}
