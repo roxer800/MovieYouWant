@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useMovieContext } from "@/components/context/MovieContext";
+import { useMovieContext } from "@/context/MovieContext";
 import { useNavigation } from "expo-router";
 import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
 import { Movies as MoviesType } from "@/types/types";

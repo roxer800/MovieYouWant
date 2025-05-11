@@ -10,7 +10,7 @@ import {
 import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
-import { useMovieContext } from "../../components/context/MovieContext";
+import { useMovieContext } from "../../context/MovieContext";
 import { router, useNavigation } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useTranslation } from "react-i18next";

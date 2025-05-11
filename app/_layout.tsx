@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { Provider } from "react-redux";
 import { useColorScheme } from "@/components/useColorScheme";
-import { MovieContextProvider } from "@/components/context/MovieContext";
+import { MovieContextProvider } from "@/context/MovieContext";
 import store from "../redux/store";
 export { ErrorBoundary } from "expo-router";
 import * as Notifications from "expo-notifications";

@@ -2,7 +2,7 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { useMovieContext } from "@/components/context/MovieContext";
+import { useMovieContext } from "@/context/MovieContext";
 import * as Notifications from "expo-notifications";
 import { useTranslation } from "react-i18next";
 

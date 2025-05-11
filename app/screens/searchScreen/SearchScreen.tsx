@@ -11,7 +11,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "expo-router";
 import { useMovieStore } from "@/stores/MovieStore";
 
-import { useMovieContext } from "@/components/context/MovieContext";
+import { useMovieContext } from "@/context/MovieContext";
 import Movies from "./components/Movies";
 import NoMovies from "./components/NoMovies";
 
