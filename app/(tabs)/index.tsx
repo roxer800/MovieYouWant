@@ -2,28 +2,51 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
 import { useMovieContext } from "@/components/context/MovieContext";
-import { useMovieStore } from "@/stores/MovieStore";
+import * as Notifications from "expo-notifications";
+import { useTranslation } from "react-i18next";
 
 export default function TabOneScreen() {
-  const { getMovies, getMovie } = useMovieContext();
+  const { t } = useTranslation();
+  const { getMovies } = useMovieContext();
   const [search, setSearch] = useState("");
-
-  const [fontsLoaded] = useFonts({
-    Lobster_400Regular,
-  });
+  const [isEligible, setIsEligible] = useState(true);
 
   function searchMovieFunction(query: string) {
-    getMovies(query);
-    router.push("/searchedMoviesStack");
+    if (search.length > 2) {
+      setIsEligible(true);
+      getMovies(query);
+      router.push("/searchedMovies");
+    } else {
+      setIsEligible(false);
+    }
   }
+
+  useEffect(() => {
+    const requestNotificationPermission = async () => {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      if (finalStatus !== "granted") {
+        alert("Permission for notifications was not granted.");
+        return;
+      }
+    };
+    requestNotificationPermission();
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Movie You Want</Text>
       <TextInput
-        placeholder="Search movies..."
+        placeholder={t("search_movies")}
+        placeholderTextColor="#343a40"
         value={search}
         onChangeText={setSearch}
         style={styles.search}
@@ -36,6 +59,9 @@ export default function TabOneScreen() {
       >
         <Text style={styles.searchBtnText}>Search</Text>
       </TouchableOpacity>
+      {!isEligible && (
+        <Text style={styles.eligibility}>{t("search_eligibility")}</Text>
+      )}
     </View>
   );
 }
@@ -71,5 +97,12 @@ const styles = StyleSheet.create({
     color: "white",
     position: "absolute",
     top: 180,
+  },
+  eligibility: {
+    fontFamily: "Lobster_400Regular",
+    color: "red",
+    marginTop: 20,
+    fontSize: 24,
+    textAlign: "center",
   },
 });

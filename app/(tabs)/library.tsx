@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -8,21 +8,19 @@ import {
   Image,
 } from "react-native";
 import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "../../redux/store";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 import { useMovieContext } from "../../components/context/MovieContext";
 import { router, useNavigation } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import hashtag from "../../assets/images/hashtag.png";
-import star from "../../assets/images/star.png";
-import stars from "../../assets/images/stars.png";
-import time from "../../assets/images/hourglass.png";
 import { useTranslation } from "react-i18next";
 
 const library = () => {
   const { getMovie } = useMovieContext();
-  const stackNavigation = useNavigation();
   const { t, i18n } = useTranslation();
+  const [fontsLoaded] = useFonts({
+    Lobster_400Regular,
+  });
   const watchedMovies = useSelector(
     (state: RootState) => state.movie.watchedMovies
   );
@@ -30,10 +28,10 @@ const library = () => {
     (sum, movie) => sum + parseFloat(movie.imdbRating),
     0
   );
-  const totalRating = watchedMovies.reduce(
-    (sum, movie) => sum + movie?.rating,
-    0
-  );
+  const totalRating = watchedMovies
+    .filter((movie) => movie.rating !== undefined)
+    .reduce((sum, movie) => sum + (movie.rating ?? 0), 0);
+
   const totalWatchTime = watchedMovies.reduce(
     (sum, movie) => sum + parseFloat(movie.Runtime),
     0
@@ -48,9 +46,10 @@ const library = () => {
     (totalWatchTime / watchedMovies.length).toFixed(1)
   );
 
-  const [fontsLoaded] = useFonts({
-    Lobster_400Regular,
-  });
+  function navigateToMovie(movieId: string) {
+    getMovie(movieId);
+    router.push("/screens/movieScreen/MovieScreen");
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -60,7 +59,10 @@ const library = () => {
           {watchedMovies.length > 0 && (
             <View style={styles.statisticsWrapper}>
               <View style={styles.statistics}>
-                <Image source={hashtag} style={styles.movieIcon} />
+                <Image
+                  source={require("../../assets/images/hashtag.png")}
+                  style={styles.movieIcon}
+                />
                 <Text style={styles.text}>
                   {watchedMovies.length}{" "}
                   {watchedMovies.length > 1 &&
@@ -72,20 +74,35 @@ const library = () => {
                   {i18n.language === "ka" && t("Movie")}
                 </Text>
               </View>
-              <View style={styles.statistics}>
-                <Image source={star} style={styles.movieIcon} />
-                <Text style={styles.text}>{averageRating}</Text>
-              </View>
-              <View style={styles.statistics}>
-                <Image source={stars} style={styles.movieIcon} />
-                <Text style={styles.text}>{averageImdbRating}</Text>
-              </View>
-              <View style={styles.statistics}>
-                <Image source={time} style={styles.movieIcon} />
-                <Text style={styles.text}>
-                  {averageWatchTime} {t("min")}
-                </Text>
-              </View>
+              {averageRating && (
+                <View style={styles.statistics}>
+                  <Image
+                    source={require("../../assets/images/star.png")}
+                    style={styles.movieIcon}
+                  />
+                  <Text style={styles.text}>{averageRating}</Text>
+                </View>
+              )}
+              {averageImdbRating && (
+                <View style={styles.statistics}>
+                  <Image
+                    source={require("../../assets/images/stars.png")}
+                    style={styles.movieIcon}
+                  />
+                  <Text style={styles.text}>{averageImdbRating}</Text>
+                </View>
+              )}
+              {averageWatchTime && (
+                <View style={styles.statistics}>
+                  <Image
+                    source={require("../../assets/images/hourglass.png")}
+                    style={styles.movieIcon}
+                  />
+                  <Text style={styles.text}>
+                    {averageWatchTime} {t("min")}
+                  </Text>
+                </View>
+              )}
             </View>
           )}
         </View>
@@ -94,7 +111,10 @@ const library = () => {
             {watchedMovies?.map((movie) => {
               return (
                 <View key={movie.imdbID}>
-                  <View style={styles.movieContainer}>
+                  <TouchableOpacity
+                    onPress={() => navigateToMovie(movie.imdbID)}
+                    style={styles.movieContainer}
+                  >
                     <Image
                       source={{ uri: movie.Poster }}
                       style={styles.moviePoster}
@@ -106,17 +126,27 @@ const library = () => {
                           <AntDesign name="calendar" size={24} color="white" />
                           <Text style={styles.year}>{movie.Year}</Text>
                         </View>
-                        <View style={styles.movieYear}>
-                          <Image source={star} style={styles.movieIcon} />
-                          <Text style={styles.text}>{movie.rating}</Text>
-                        </View>
-                        <View style={styles.statistics}>
-                          <Image source={time} style={styles.movieIcon} />
-                          <Text style={styles.text}>{movie.Runtime}</Text>
-                        </View>
+                        {movie.rating && (
+                          <View style={styles.movieYear}>
+                            <Image
+                              source={require("../../assets/images/star.png")}
+                              style={styles.movieIcon}
+                            />
+                            <Text style={styles.text}>{movie.rating}</Text>
+                          </View>
+                        )}
+                        {averageWatchTime && (
+                          <View style={styles.statistics}>
+                            <Image
+                              source={require("../../assets/images/star.png")}
+                              style={styles.movieIcon}
+                            />
+                            <Text style={styles.text}>{movie.Runtime}</Text>
+                          </View>
+                        )}
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                   <View style={styles.hr}></View>
                 </View>
               );

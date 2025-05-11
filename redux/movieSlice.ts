@@ -1,23 +1,7 @@
-import { useMovieStore } from '@/stores/MovieStore';
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notificationFunction } from '../utils/notificationFunction'
-
-
-export interface Movie {
-  id: string;
-  title: string;
-  year: string;
-  rating?: number;
-  [key: string]: any;
-}
-
-export type WatchStatus = 'idle' | 'watching' | 'finished' | 'cancelled';
-
-interface MovieState {
-  movie: Movie | null;
-  watchStatus: WatchStatus;
-  watchedMovies: Movie[];
-}
+import { Movie,MovieState  } from '@/types/types';
 
 const initialState: MovieState = {
   movie: null,
@@ -29,16 +13,12 @@ const movieSlice = createSlice({
   name: 'movie',
   initialState,
   reducers: {
-    setMovie: (state, action: PayloadAction<Movie>) => {
-      state.movie = action.payload;
-    },
     startWatching: (state, action: PayloadAction<Movie>) => {
       state.watchStatus = 'watching';
       state.movie = action.payload;
-
       notificationFunction(
         'Movie Started',
-        `You started watching ${state.movie}`
+        `You started watching ${state.movie.Title}`
       );
     },
     endWatching: (state) => {
@@ -52,17 +32,15 @@ const movieSlice = createSlice({
         }
         state.movie = null;
       },
-      setRating: (state, action) => {
-        state.watchedMovies = state.watchedMovies.map((movie) =>
-          movie.imdbID === action.payload.id
-            ? { ...movie, rating: action.payload.rating }
-            : movie
-        );
-      }
-      
-      
+    setRating: (state, action) => {
+      state.watchedMovies = state.watchedMovies.map((movie) =>
+        movie.imdbID === action.payload.id
+          ? { ...movie, rating: action.payload.rating }
+          : movie
+      );
+    }
     },
 });
 
-export const { setMovie, startWatching, endWatching, setFinished, setRating  } = movieSlice.actions;
+export const { startWatching, endWatching, setFinished, setRating  } = movieSlice.actions;
 export default movieSlice.reducer;

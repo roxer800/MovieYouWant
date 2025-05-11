@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
 import CountryFlag from "react-native-country-flag";
 import { Text, View } from "@/components/Themed";
@@ -81,5 +81,6 @@ const styles = StyleSheet.create({
   langText: {
     marginLeft: 10,
     fontSize: 16,
+    color: "white",
   },
 });

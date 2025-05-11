@@ -1,18 +1,8 @@
 // AppContext.tsx
 import { useMovieStore } from "@/stores/MovieStore";
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, useContext, ReactNode } from "react";
 import Constants from "expo-constants";
-
-type MovieContextType = {
-  search: string;
-  setSearch: (value: string) => void;
-};
+import { MovieContextType } from "@/types/types";
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 

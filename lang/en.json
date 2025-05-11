@@ -19,5 +19,9 @@
    "start_watching":"Start Watching",
    "end_watching":"End Watching",
    "finish_watching":"Finish Movie",
-   "library_empty":"You Dont Have Movies in Library"
+   "library_empty":"You Dont Have Movies in Library",
+   "already_watching": "you already watching: ",
+   "search_eligibility":"Search Word Must be more than 3 characters long",
+   "no_Movies":"There is no Movie with That name",
+   "go_back":"Go Back"
 }

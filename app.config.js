@@ -6,7 +6,7 @@ export default {
     slug: "noxxtton-example",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/images/icon.png",
+    icon: "./assets/images/logo.png",
     scheme: "noxxttonexample",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
@@ -21,17 +21,22 @@ export default {
         UIBackgroundModes: ["fetch", "remote-notification"],
         NSLocationWhenInUseUsageDescription: "We need access to your location to show nearby hotels.", 
       },
+      icon:"./assets/images/logo.png",
     },
     android: {
       package: "com.roxer800.noxxttonexample",
       adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: "./assets/images/logo.png",
         backgroundColor: "#ffffff"
       },
       permissions: [
         "NOTIFICATIONS", 
       ],
-      edgeToEdgeEnabled: true
+      edgeToEdgeEnabled: true,
+      "notification": {
+        "icon": "./assets/images/logo.png",
+        "color": "#7950f2"
+      }
     },
     web: {
       bundler: "metro",
