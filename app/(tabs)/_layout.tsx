@@ -20,7 +20,6 @@ export default function TabLayout() {
           tabBarIcon: () => (
             <MaterialIcons name="local-movies" size={24} color="#6741d9" />
           ),
-          headerRight: () => <Link href="/modal" asChild></Link>,
         }}
       />
       <Tabs.Screen
@@ -30,7 +29,6 @@ export default function TabLayout() {
           tabBarIcon: () => (
             <MaterialIcons name="library-books" size={24} color="#6741d9" />
           ),
-          headerRight: () => <Link href="/modal" asChild></Link>,
         }}
       />
       <Tabs.Screen
