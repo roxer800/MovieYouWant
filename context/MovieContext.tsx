@@ -1,4 +1,3 @@
-// AppContext.tsx
 import { useMovieStore } from "@/stores/MovieStore";
 import React, { createContext, useContext, ReactNode } from "react";
 import Constants from "expo-constants";

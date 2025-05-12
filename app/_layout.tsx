@@ -3,7 +3,7 @@ import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { Provider } from "react-redux";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -12,7 +12,8 @@ import store from "../redux/store";
 export { ErrorBoundary } from "expo-router";
 import * as Notifications from "expo-notifications";
 import "react-native-gesture-handler";
-
+import "../i18n";
+import i18n from "i18next";
 export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
@@ -22,8 +23,8 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
-    shouldShowBanner: true, // ✅ NEW
-    shouldShowList: true, // ✅ NEW
+    shouldShowBanner: true,
+    shouldShowList: true,
   }),
 });
 
@@ -56,15 +57,26 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const waitForLang = async () => {
+      await i18n.changeLanguage();
+      setIsReady(true);
+    };
+    waitForLang();
+  }, []);
 
   return (
     <MovieContextProvider>
       <Provider store={store}>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DarkTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-        </ThemeProvider>
+        {isReady && (
+          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DarkTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+          </ThemeProvider>
+        )}
       </Provider>
     </MovieContextProvider>
   );
